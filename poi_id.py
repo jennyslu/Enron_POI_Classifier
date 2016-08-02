@@ -62,6 +62,11 @@ features = np.array(features)
 from sklearn import preprocessing
 #features = preprocessing.scale(features)
 
+### FEATURE SELECTION
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+#features_new = SelectKBest(chi2, k=2).fit_transform(features, labels)
+
 ### CHOOSE A CLASSIFIER
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -73,7 +78,7 @@ clf = dt
 
 ### TUNE PARAMETERS USING GRIDSEARCHCV
 from sklearn.grid_search import GridSearchCV
-#param_grid = {"criterion": ["gini", "entropy"], "min_samples_split": [2, 3, 4], "max_features": [1, 2, 3, 4]}
+param_grid = {"criterion": ["gini", "entropy"], "min_samples_split": [2, 3, 4], "max_features": [1, 2]}
 #clf = GridSearchCV(dt, param_grid = param_grid, scoring = 'recall')
 
 # Dump your classifier, dataset, and features_list
@@ -107,3 +112,4 @@ precision, recall, fscore, support = precision_recall_fscore_support(total_label
 
 PERF_FORMAT_STRING = "Precision: {:06.5f} \nRecall: {:06.5f} \nfscore: {:06.5f}"
 print(PERF_FORMAT_STRING.format(precision, recall ,fscore))
+print(clf.feature_importances_)
